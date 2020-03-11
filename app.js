@@ -25,8 +25,6 @@ const puppeteer = require('puppeteer');
         };
         return {classes:[...classes],links:[...links]};
     });
-
-    console.log(links);
-
     await browser.close();
+    
 })();
