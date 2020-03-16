@@ -1,12 +1,12 @@
-const mongo = require('mongodb').MongoClient
-const url = 'mongodb://localhost:27017'
-mongo.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, (err, client) => {
-    if (err) {
-        console.error(err)
-        return
-    }
-    const db = client.db('webscrapper')
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+
+MongoClient.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    dbo.createCollection("classes", function (err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        db.close();
+    });
 });
