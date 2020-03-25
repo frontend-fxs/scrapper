@@ -1,0 +1,32 @@
+{
+  "name": "scrapper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.4",
+    "nodemon": "^2.0.2",
+    "psl": "^1.7.0",
+    "puppeteer": "^2.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js",
+    "dev": "./node_modules/.bin/nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-fxs/scrapper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-fxs/scrapper/issues"
+  },
+  "homepage": "https://github.com/frontend-fxs/scrapper#readme"
+}

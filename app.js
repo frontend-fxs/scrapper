@@ -1,78 +1,34 @@
-async function scrapPage() {
-    let puppeteer = require('puppeteer');
-    let psl = require('psl');
-    let MongoClient = require('mongodb').MongoClient;
-    let extractHostname = require('./utils.js').extractHostname;
-    let url = "mongodb://localhost:27017/";
-    let client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    let webscrapper = client.db("webscrapper");
-    let URL = '';
-    let browser = await puppeteer.launch();
-    let page = await browser.newPage();
-    page.on('console', consoleObj => console.log(consoleObj.text()));
-    const res = await webscrapper.collection("urlsclasses").findOne({ visited: false });
-    URL = res.url;
-    let domain = psl.get(extractHostname(URL));
+async function scrapPages() {
 
-    try {
+    console.log('Ejecución de scrapPages.');
 
-        await page.goto(URL, { waitUntil: 'domcontentloaded' });
+    let { extractHostname } = require('./utils.js');
+    let { getNextPageNotVisited, savePageList, saveClassList } = require('./mongo.js');
+    let { scrapPage } = require('./puppeteer.js');
 
-        let dataObj = await page.evaluate(() => {
+    console.log('Requerimos módulos utils, mongo y puppeteer. ');
 
-            let anchors = document.querySelectorAll('a');
-            let elements = document.querySelectorAll('*');
-            let links = new Set();
-            let classes = new Set();
+    let URL = await getNextPageNotVisited();
 
-            for (let i = 0; i < anchors.length; i++) {
-                let href = anchors[i].getAttribute("href");
-                links.add(href);
-            }
+    console.log('Recogemos la URL de la primera página encontrada no visitada.', URL);
 
-            for (let i = 0; i < elements.length; i++) {
-                for (let j = 0; j < elements[i].classList.length; j++) {
-                    let className = elements[i].classList.item(j);
-                    classes.add(className);
-                }
-            }
-            return {links:[...links],classes:[...classes]};
-        });
-        
-        for (let i = 0; i < dataObj.links.length;i++){
-            
-            href = dataObj.links[i];
+    let domain = extractHostname(URL);
 
-            if (/^\//.test(href)) {
-                href = domain + href;
-            };
-            if (/\.fxstreet\./.test(href)) {
-                let linkNotExist = webscrapper.collection('urlsclasses').find({ "url": href }).length < 1;
-                if (linkNotExist) {
-                    webscrapper.collection('urlsclasses').insertOne({ url: href, visited: false });
-                };
-            };
-        };
-        webscrapper.collection('urlsclasses').insertOne({ url: URL, visited: true, classes: [...dataObj.classes] });
-        scrapPage();
-        for (let i = 0; i < dataObj.classes.length;i++){
-            let className = dataObj.classes[i];
-            let classNotExist = webscrapper.collection('classes').find({ "className": className }).length < 1;
-            if (classNotExist) {
-                webscrapper.collection('classes').insertOne({ className: className });
-            };
-        }
-        
-    }
-    catch (err) {
-        console.log(err);
-    }
-    finally {
-        client.close();
-    };
-    await browser.close();
+    console.log('Extraemos el dominio de la URL', domain);
+
+    let dataObj = await scrapPage(URL);
+
+    console.log('sacamos las páginas y las clases');
+
+    await savePageList(dataObj);
+
+    console.log('guardamos las páginas');
+
+    await saveClassList(dataObj);
+
+    console.log('guardamos las clases');
 
 };
 (async () => {
-    await scrapPage();
+    await scrapPages();
 })().catch(err => console.error(err));
