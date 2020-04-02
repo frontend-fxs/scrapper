@@ -4,11 +4,11 @@ async function getPuppeteerPage() {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
     page.on('console', consoleObj => console.log(consoleObj.text()));
-    return page;
+    return {page,browser};
 }
 
 async function scrapPage(URL) {
-    let page = await getPuppeteerPage(); 
+    let { page, browser } = await getPuppeteerPage(); 
     await page.goto(URL, { waitUntil: 'domcontentloaded' });
 
     let dataObj = await page.evaluate(() => {

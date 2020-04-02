@@ -1,6 +1,11 @@
 function extractHostname(url){
+
     let psl = require('psl');
+
     var hostname;
+
+    console.log('inside extractHostname parameter url ', url);
+
     if (url.indexOf("//") > -1) {
         hostname = url.split('/')[2];
     }

@@ -2,31 +2,28 @@ async function scrapPages() {
 
     console.log('Ejecución de scrapPages.');
 
-    let { extractHostname } = require('./utils.js');
-    let { getNextPageNotVisited, savePageList, saveClassList } = require('./mongo.js');
-    let { scrapPage } = require('./puppeteer.js');
-
     console.log('Requerimos módulos utils, mongo y puppeteer. ');
+
+    let { getNextPageNotVisited, updatePageList, updateClassList } = require('./mongo.js');
+    let { scrapPage } = require('./puppeteer.js');
 
     let URL = await getNextPageNotVisited();
 
     console.log('Recogemos la URL de la primera página encontrada no visitada.', URL);
 
-    let domain = extractHostname(URL);
-
-    console.log('Extraemos el dominio de la URL', domain);
-
     let dataObj = await scrapPage(URL);
 
-    console.log('sacamos las páginas y las clases');
+    console.log('sacamos las páginas y las clases de la URL ', URL);
 
-    await savePageList(dataObj);
+    await updatePageList(dataObj, URL);
 
-    console.log('guardamos las páginas');
+    console.log('guardamos las páginas desde ', dataObj);
 
-    await saveClassList(dataObj);
+    await updateClassList(dataObj, URL);
 
-    console.log('guardamos las clases');
+    console.log('guardamos las clases desde ', dataObj);
+
+    console.log('Fin de scrap Pages', URL);
 
 };
 (async () => {

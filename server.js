@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
+let mongo = require('./mongo.js');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -12,12 +13,9 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 });
 
-app.post('/pagesXclass', (req, res) => {
+app.post('/classPageList', (req, res) => {
     console.log(req.body);
 });
-app.post('/classXpages', (req, res) => {
-    console.log(req.body);
-}); 
-app.post('/classListAppearances', (req, res) => {
-    console.log("return a class list with appearances");
+app.post('/pageClassList', (req, res) => {
+    res.render('index.ejs', { quotes: result })
 });
