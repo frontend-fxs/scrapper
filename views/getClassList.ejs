@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>body{
+    width:100%;
+    min-height: 100vh;
+    }
+    table{
+    width: auto;
+    margin:auto;
+    }
+    td,th{
+    vertical-align: top;
+    text-align: left;
+    }
+    H1{
+    text-align: center;
+    }</style>
+</head>
+
+<body>
+    <h1>ENTIRE CLASS LIST ORDERED BY APPEARANCES</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>CLASS NAME</th>
+                <th>APPEARANCES</th>
+                <th>PAGES WHERE APPEARS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0; i<classList.length; i++) {%>
+            <tr>
+                <td><%= classList[i].className %></td>
+                <td><%= classList[i].appearances %></td>
+                <td>
+                    <% for(var j=0;j<classList[i].pages.length; j++){%>
+                        <a href=<%= classList[i].pages[j] %> target="_blank"><%= classList[i].pages[j] %></a><br/>
+                    <% } %>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+
+    </table>
+</body>
+
+</html>

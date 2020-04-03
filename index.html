@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-      .formArea {
-        display: flex;
-      }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            min-height: 50vh;
+            flex-direction: column;
+        }
+
+        body>div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form {
+            flex: 1 1 50%;
+        }
+
+        fieldset {
+            text-align: center;
+        }
     </style>
-  </head>
-  <body>
-    <h1>WEBSCRAPPER</h1>
-    <div class="formArea">
-      <form action="/classPageList" method="POST">
-        <fieldset>
-          <legend>Select a class to see on which pages it appears</legend>
-          <select name="classSelect">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-          <button type="submit">Query</button>
-        </fieldset>
-      </form>
-      <form action="/pageClassList" method="POST">
-        <fieldset>
-          <legend>Select a page to find out what class list it has</legend>
-          <select name="pageSelect">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-          </select>
-          <button type="submit">Query</button>
-        </fieldset>
-      </form>
-      <form action="/classListAppearances" method="POST">
-        <fieldset>
-          <legend>Get class List with number of appearances</legend>
-          <button type="submit">
-            Query
-          </button>
-        </fieldset>
-      </form>
+</head>
+
+<body>
+    <h1>FXStreet WEBSCRAPPER</h1>
+    <div>
+        <form action="/getClassList" method="POST">
+            <fieldset>
+                <legend>SEARCH BY CLASS</legend>
+                <input type="text" name="class" />
+                <button type="submit">Query</button>
+            </fieldset>
+        </form>
+        <form action="/getEntireClassList" method="POST">
+            <fieldset>
+                <legend>ENTIRE LIST OF CLASSES</legend>
+                <button type="submit">Query</button>
+            </fieldset>
+        </form>
+
     </div>
-    <div id="results">
-      <img
-        src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/source.gif"
-        alt=""
-      />
+    <div>
+        <form action="/getPageList" method="POST">
+            <fieldset>
+                <legend>SEARCH BY URL</legend>
+                <input type="text" name="page" />
+                <button type="submit">Query</button>
+            </fieldset>
+        </form>
+        <form action="/getEntirePageList" method="POST">
+            <fieldset>
+                <legend>ENTIRE LIST OF PAGES</legend>
+                <button type="submit">Query</button>
+            </fieldset>
+        </form>
     </div>
-  </body>
+</body>
+
 </html>

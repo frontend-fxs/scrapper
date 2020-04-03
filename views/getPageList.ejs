@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            width:100%;
+            min-height: 100vh;
+                    }
+                    table{
+                        width: auto;
+                        margin:auto;
+                    }
+                    td,th{
+                        vertical-align: top;
+                        text-align: left;
+                    }
+                    H1{
+                        text-align: center;
+                    }
+    </style>
+</head>
+
+<body>
+
+    <h1>SCRAPPED PAGES</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>SCRAPPED</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0; i<pageList.length; i++) {%>
+            <tr>
+                <td>
+                    <a href=<%= pageList[i].url %> target="_blank"><%= pageList[i].url %></a>
+                </td>
+                <td>
+                    <%= pageList[i].visited %>
+                </td>
+            </tr>
+            <% } %>
+        </tbody>
+
+    </table>
+</body>
+
+</html>
