@@ -1,4 +1,4 @@
-let { getNextPageNotVisited, updatePageList, updateClassList, drop } = require('./mongo.js');
+let { getNextPageNotVisited, updatePageList, updateClassList} = require('./mongo.js');
 let { scrapPage } = require('./puppeteer.js');
 async function scrapPages() {
     let URL = await getNextPageNotVisited();

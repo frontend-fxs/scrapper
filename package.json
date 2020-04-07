@@ -8,9 +8,12 @@
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "mongodb": "^3.5.4",
+    "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
     "psl": "^1.7.0",
-    "puppeteer": "^2.1.1"
+    "puppeteer": "^2.1.1",
+    "request": "^2.88.2",
+    "string-extract-class-names": "^5.9.18"
   },
   "devDependencies": {
     "mocha": "^7.1.1"

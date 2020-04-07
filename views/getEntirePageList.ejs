@@ -18,7 +18,7 @@
                         vertical-align: top;
                         text-align: left;
                     }
-                    H1{
+                    h1,h2{
                         text-align: center;
                     }
     </style>
@@ -26,7 +26,9 @@
 
 <body>
 
-    <h1>SCRAPPED PAGES <%= count %></h1>
+    <h1>TOTAL PAGES FOUND <%= totalCount %></h1>
+    <h2>SCRAPPED <%= scrappedCount %></h2>
+    <H2>REMAINING <%= remainCount %></H2>
     <table>
         <thead>
             <tr>

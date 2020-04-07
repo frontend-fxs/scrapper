@@ -26,6 +26,6 @@ app.post('/getPageList', async (pageURL, res) => {
     res.render('getPageList.ejs', { pageList: pageList });
 });
 app.post('/getEntirePageList', async (pageURL, res) => {
-    let { pageList: pageList, count: count } = await getEntirePageList().catch((error) => { console.log(error); });
-    res.render('getEntirePageList.ejs', { pageList: pageList, count: count });
+    let { pageList: pageList, totalCount: totalCount, scrappedCount: scrappedCount, remainCount: remainCount } = await getEntirePageList().catch((error) => { console.log(error); });
+    res.render('getEntirePageList.ejs', { pageList: pageList, totalCount: totalCount, scrappedCount: scrappedCount, remainCount: remainCount });
 });
