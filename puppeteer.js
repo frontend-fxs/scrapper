@@ -25,7 +25,6 @@ async function scrapPage(URL) {
         }
         return { links: [...links], classList: [...classList] };
     });
-    console.log(dataObj);
     await browser.close();
     return dataObj;
 }

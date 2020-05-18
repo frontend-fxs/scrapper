@@ -1,7 +1,7 @@
 RUN APP 
 
-npm run dev
+npm dev
 
 UPDATE DATABASE
 
-node app.js
+node scrapp

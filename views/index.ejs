@@ -1,8 +1,46 @@
-<ul class="quotes">
-  <% for(var i=0; i<quotes.length; i++) {%>
-    <li class="quote">
-      <span><%= quotes[i].name %></span>
-      <span><%= quotes[i].quote %></span>
-    </li>
-  <% } %>
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+<style>
+  table{border-collapse: collapse;margin:auto;}
+  table,td{border:1px solid grey;}
+  td{vertical-align: top;}
+  a{white-space: nowrap;}
+  h1{text-align: center;}
+</style>
+</head>
+
+<body>
+  <h1>FXStreet CSS Classes scrapping data<br/><small>Dynamic appearances not included</small></h1>
+  <table>
+    <caption><%= data.totalPagesCount %> pages found | <%= data.remainPagesCount %>
+      left to scrape  <strong>||</strong> <%= data.totalClassesCount %> classes, | <%= data.notUsedClassesCount %> are not used statically. (Appearances of dynamic classes not included)<br/></caption>
+    <thead>
+      <tr>
+        <th>Class Name</th>
+        <th>Appearances</th>
+        <th>Pages Where it appears</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (var i=0; i < classList.length; i++) {%>
+      <tr>
+        <td><%= classList[i].className %></td>
+        <td><%= classList[i].appearances %></td>
+        <td>
+          <% for (var j=0; j < classList[i].pages.length; j++) {%>
+            <a href="<%= classList[i].pages[j] %>"><%= classList[i].pages[j] %></a><br/>  
+          <%}%>
+        </td>
+      </tr>
+      <%}%>
+    </tbody>
+  </table>
+          
+</body>
+
+</html>

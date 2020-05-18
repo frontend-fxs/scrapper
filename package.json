@@ -4,12 +4,15 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
+    "fs": "0.0.1-security",
     "mongodb": "^3.5.4",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.2",
+    "objects-to-csv": "^1.3.6",
     "psl": "^1.7.0",
     "puppeteer": "^2.1.1",
     "request": "^2.88.2",
@@ -21,7 +24,8 @@
   "scripts": {
     "test": "mocha",
     "start": "node server.js",
-    "dev": "./node_modules/.bin/nodemon server.js"
+    "dev": "./node_modules/.bin/nodemon server.js",
+    "scrapp":"node scrapp.js"
   },
   "repository": {
     "type": "git",
