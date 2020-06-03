@@ -28,8 +28,6 @@ async function init() {
 }
 async function extractClassNamesFromSiteStylesheet() {
   let { webscrapper, client } = await mongoConnect();
-  let { extractStylesheetClassNames } = require("./utils");
-  classArray = extractStylesheetClassNames();
   for (let i = 0; i < classArray.length; i++) {
     let className = classArray[i];
     let exist = await webscrapper
@@ -50,7 +48,6 @@ async function getNextPageNotVisited() {
     .collection("pageList")
     .findOne({ visited: false });
   client.close();
-  console.log(new Date(), res);
   return res.url;
 }
 async function updatePageList(dataObj, pageURL) {
@@ -132,16 +129,11 @@ async function getScrapedData() {
     .collection("classList")
     .find({})
     .count();
-  let notUsedClassesCount = await webscrapper
-    .collection("classList")
-    .find({ appearances: 0 })
-    .count();
   client.close();
   return {
     totalPagesCount: totalPagesCount,
     remainPagesCount: remainPagesCount,
     totalClassesCount: totalClassesCount,
-    notUsedClassesCount: notUsedClassesCount,
   };
 }
 async function getPageList() {
@@ -162,24 +154,16 @@ async function getClassList() {
     .toArray()
     .catch((error) => console.log(error));
   client.close();
-  let classListSortedByClassName = classListUnsorted.sort((a, b) => {
+  let classList = classListUnsorted.sort((a, b) => {
     if (a.className > b.className) {
-      return -1;
+      return 1;
     }
     if (b.className > a.className) {
-      return 1;
-    }
-    return 0;
-  });
-  let classList = classListSortedByClassName.sort((a, b) => {
-    if (a.appearances > b.appearances) {
-      return 1;
-    }
-    if (b.appearances > a.appearances) {
       return -1;
     }
     return 0;
   });
+  
   return classList;
 }
 module.exports.reset = reset;
