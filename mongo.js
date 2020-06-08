@@ -22,7 +22,7 @@ async function init() {
     .collection("pageList")
     .insertOne({ url: "https://www.fxstreet.com", visited: false });
   await webscrapper.createCollection("classList");
-  await extractClassNamesFromSiteStylesheet();
+  //await extractClassNamesFromSiteStylesheet();
   client.close();
   return true;
 }
@@ -48,6 +48,7 @@ async function getNextPageNotVisited() {
     .collection("pageList")
     .findOne({ visited: false });
   client.close();
+  console.log(res);
   return res.url;
 }
 async function updatePageList(dataObj, pageURL) {

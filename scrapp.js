@@ -2,6 +2,7 @@ let { getNextPageNotVisited, updatePageList, updateClassList } = require('./mong
 let { scrapPage } = require('./puppeteer.js');
 async function scrapPages() {
     let URL = await getNextPageNotVisited();
+    console.log(URL);
     let dataObj = await scrapPage(URL);
     await updatePageList(dataObj, URL);
     await updateClassList(dataObj, URL);
