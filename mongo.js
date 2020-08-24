@@ -22,23 +22,6 @@ async function init() {
     .collection("pageList")
     .insertOne({ url: "https://www.fxstreet.com", visited: false });
   await webscrapper.createCollection("classList");
-  //await extractClassNamesFromSiteStylesheet();
-  client.close();
-  return true;
-}
-async function extractClassNamesFromSiteStylesheet() {
-  let { webscrapper, client } = await mongoConnect();
-  for (let i = 0; i < classArray.length; i++) {
-    let className = classArray[i];
-    let exist = await webscrapper
-      .collection("classList")
-      .findOne({ className: className });
-    if (!exist) {
-      await webscrapper
-        .collection("classList")
-        .insertOne({ className: className, appearances: 0, pages: [] });
-    }
-  }
   client.close();
   return true;
 }
@@ -48,7 +31,6 @@ async function getNextPageNotVisited() {
     .collection("pageList")
     .findOne({ visited: false });
   client.close();
-  console.log(res);
   return res.url;
 }
 async function updatePageList(dataObj, pageURL) {
@@ -75,13 +57,14 @@ async function updatePageList(dataObj, pageURL) {
           await webscrapper
             .collection("pageList")
             .insertOne({ url: href, visited: false });
+            console.log('New Link Found ! ' , href);
         }
       }
     }
   }
   await webscrapper
     .collection("pageList")
-    .updateOne({ url: pageURL }, { $set: { visited: true } }, { upsert: true });
+    .updateMany({ url: pageURL }, { $set: { "visited": true } });
   client.close();
   return true;
 }
@@ -137,16 +120,6 @@ async function getScrapedData() {
     totalClassesCount: totalClassesCount,
   };
 }
-async function getPageList() {
-  let { webscrapper, client } = await mongoConnect();
-  let pageList = await webscrapper
-    .collection("pageList")
-    .find({})
-    .toArray()
-    .catch((error) => console.log(error));
-  client.close();
-  return pageList;
-}
 async function getClassList() {
   let { webscrapper, client } = await mongoConnect();
   let classListUnsorted = await webscrapper
@@ -156,16 +129,25 @@ async function getClassList() {
     .catch((error) => console.log(error));
   client.close();
   let classList = classListUnsorted.sort((a, b) => {
-    if (a.className > b.className) {
-      return 1;
-    }
-    if (b.className > a.className) {
+    if (parseInt(a.appearances) > parseInt(b.appearances)) {
       return -1;
+    }
+    if (parseInt(a.appearances) < parseInt(b.appearances)) {
+      return 1;
     }
     return 0;
   });
-  
   return classList;
+}
+async function getPageList() {
+  let { webscrapper, client } = await mongoConnect();
+  let pageList = await webscrapper
+    .collection("pageList")
+    .find({})
+    .toArray()
+    .catch((error) => console.log(error));
+  client.close();
+  return pageList;
 }
 module.exports.reset = reset;
 module.exports.init = init;

@@ -2,7 +2,6 @@ async function getPuppeteerPage() {
     let puppeteer = require('puppeteer');
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
-    page.on('console', consoleObj => console.log(consoleObj.text()));
     return {page,browser};
 }
 async function scrapPage(URL) {

@@ -5,41 +5,69 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
-<style>
-  table{border-collapse: collapse;margin:auto;}
-  table,td{border:1px solid grey;}
-  td{vertical-align: top;}
-  a{white-space: nowrap;}
-  h1{text-align: center;}
-</style>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    a {
+      white-space: nowrap;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .flexbox {
+      display: flex;
+      width: 100%;
+      margin: 0;
+    }
+    .appearances,
+    .className,
+    .pages {
+      border: 1px solid rgba(0,0,0,.1);
+      line-height: 1.5rem;
+      width: 33%;
+    }
+
+    
+    .pages {
+      height: 1.5rem;
+      overflow: hidden;
+      cursor:pointer;
+    }
+    .pages:hover {
+      height: auto;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>FXStreet CSS Classes scrapping data<br/><small>Dynamic appearances not included</small></h1>
-  <table>
-    <caption><%= data.totalPagesCount %> pages found | <%= data.remainPagesCount %>
-      left to scrape  <strong> || </strong> <%= data.totalClassesCount %> classes.</caption>
-    <thead>
-      <tr>
-        <th>Class Name</th>
-        <th>Appearances</th>
-        <th>Pages Where it appears</th>
-      </tr>
-    </thead>
-    <tbody>
+  <h1>FXStreet CSS Classes in use <br/><small>Dynamic appearances not included</small></h1>
+<h2>
+  <%= data.totalPagesCount %> pages found | <%= data.remainPagesCount %>
+  left to scrape  <strong> || </strong> <%= data.totalClassesCount %> classes. 
+</h2> 
+      <p class="flexbox">
+        <strong class="className">Class Name</strong>
+        <strong class="appearances">Appearances</strong>
+        <strong class="pages">Pages Where it appears</strong>
+      </p>
+
       <% for (var i=0; i < classList.length; i++) {%>
-      <tr>
-        <td><%= classList[i].className %></td>
-        <td><%= classList[i].appearances %></td>
-        <td>
+        <p class="flexbox">
+          <span class="className"><%= classList[i].className %></span>
+          <span class="appearances"><%= classList[i].appearances %></span>
+          <span class="pages">
+        
           <% for (var j=0; j < classList[i].pages.length; j++) {%>
             <a href="<%= classList[i].pages[j] %>"><%= classList[i].pages[j] %></a><br/>  
-          <%}%>
-        </td>
-      </tr>
+          <% } %>
+          </span>
+        </p>
       <%}%>
-    </tbody>
-  </table>
           
 </body>
 
