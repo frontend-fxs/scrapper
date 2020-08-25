@@ -31,7 +31,7 @@ async function getNextPageNotVisited() {
     .collection("pageList")
     .findOne({ visited: false });
   client.close();
-  return res.url;
+  return res ? res.url : false;
 }
 async function updatePageList(dataObj, pageURL) {
   let { extractHostname } = require("./utils.js");
