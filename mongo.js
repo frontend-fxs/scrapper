@@ -57,14 +57,13 @@ async function updatePageList(dataObj, pageURL) {
           await webscrapper
             .collection("pageList")
             .insertOne({ url: href, visited: false });
-            console.log('New Link Found ! ' , href);
         }
       }
     }
   }
   await webscrapper
     .collection("pageList")
-    .updateMany({ url: pageURL }, { $set: { "visited": true } });
+    .updateMany({ url: pageURL }, { $set: { visited: true } });
   client.close();
   return true;
 }
@@ -122,6 +121,25 @@ async function getScrapedData() {
 }
 async function getClassList() {
   let { webscrapper, client } = await mongoConnect();
+  let classList = await webscrapper
+    .collection("classList")
+    .find({})
+    .toArray()
+    .catch((error) => console.log(error));
+  client.close();
+  let classList2 = classList.sort((a, b) => {
+    if ( a.className > b.className) {
+      return 1;
+    }
+    if (a.className < b.className) {
+      return -1;
+    }
+    return 0;
+  });
+  return classList2;
+}
+async function getSiteClassList() {
+  let { webscrapper, client } = await mongoConnect();
   let classListUnsorted = await webscrapper
     .collection("classList")
     .find({})
@@ -129,15 +147,17 @@ async function getClassList() {
     .catch((error) => console.log(error));
   client.close();
   let classList = classListUnsorted.sort((a, b) => {
-    if (parseInt(a.appearances) > parseInt(b.appearances)) {
+    if (parseInt(a.className) > parseInt(b.className)) {
       return -1;
     }
-    if (parseInt(a.appearances) < parseInt(b.appearances)) {
+    if (parseInt(a.className) < parseInt(b.className)) {
       return 1;
     }
     return 0;
   });
-  return classList;
+  return classList.map((item) => {
+    return item.className;
+  });
 }
 async function getPageList() {
   let { webscrapper, client } = await mongoConnect();
@@ -149,6 +169,20 @@ async function getPageList() {
   client.close();
   return pageList;
 }
+async function setPageAsVisited(url){
+  let { webscrapper, client } = await mongoConnect();
+  await webscrapper
+  .collection("pageList").updateOne(
+    { url: url },
+    {
+      $set: {
+        visited: true 
+      }
+    }
+  );
+  client.close();
+}
+
 module.exports.reset = reset;
 module.exports.init = init;
 module.exports.getNextPageNotVisited = getNextPageNotVisited;
@@ -156,4 +190,7 @@ module.exports.updatePageList = updatePageList;
 module.exports.updateClassList = updateClassList;
 module.exports.getScrapedData = getScrapedData;
 module.exports.getClassList = getClassList;
+module.exports.getSiteClassList = getSiteClassList;
 module.exports.getPageList = getPageList;
+module.exports.setPageAsVisited = setPageAsVisited;
+

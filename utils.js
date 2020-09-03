@@ -10,7 +10,6 @@ function extractHostname(url){
     hostname = hostname.split(':')[0];
     hostname = hostname.split('?')[0];
     let domain = psl.get(hostname);
-    console.log('domain: ',domain);
     return domain;
 }
 module.exports.extractHostname = extractHostname;

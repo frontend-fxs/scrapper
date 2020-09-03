@@ -1,74 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      th,
+      td {
+        text-align: left;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <style>
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-    }
-    a {
-      white-space: nowrap;
-    }
+  <body>
+    <table>
+      <caption>
+        <h1>
+          FXStreet CSS Classes in use <br /><small
+            >Dynamic appearances not included</small
+          >
+        </h1>
+        <h2>
+          <%= data.totalPagesCount %> pages found | <%= data.remainPagesCount %>
+          left to scrape <strong> || </strong> <%= data.totalClassesCount %>
+          classes.
+        </h2>
+      </caption>
+      <thead>
+        <tr>
+          <th>Class Name</th>
+          <th>Appearances</th>
+          <th>Pages Where it appears</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (var i=0; i < classList.length; i++) {%>
+        <tr>
+          <td><strong><%= classList[i].className %></strong></td>
+          <td><strong><%= classList[i].appearances %></strong></td>
 
-    h1 {
-      text-align: center;
-    }
-
-    .flexbox {
-      display: flex;
-      width: 100%;
-      margin: 0;
-    }
-    .appearances,
-    .className,
-    .pages {
-      border: 1px solid rgba(0,0,0,.1);
-      line-height: 1.5rem;
-      width: 33%;
-    }
-
-    
-    .pages {
-      height: 1.5rem;
-      overflow: hidden;
-      cursor:pointer;
-    }
-    .pages:hover {
-      height: auto;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>FXStreet CSS Classes in use <br/><small>Dynamic appearances not included</small></h1>
-<h2>
-  <%= data.totalPagesCount %> pages found | <%= data.remainPagesCount %>
-  left to scrape  <strong> || </strong> <%= data.totalClassesCount %> classes. 
-</h2> 
-      <p class="flexbox">
-        <strong class="className">Class Name</strong>
-        <strong class="appearances">Appearances</strong>
-        <strong class="pages">Pages Where it appears</strong>
-      </p>
-
-      <% for (var i=0; i < classList.length; i++) {%>
-        <p class="flexbox">
-          <span class="className"><%= classList[i].className %></span>
-          <span class="appearances"><%= classList[i].appearances %></span>
-          <span class="pages">
-        
           <% for (var j=0; j < classList[i].pages.length; j++) {%>
-            <a href="<%= classList[i].pages[j] %>"><%= classList[i].pages[j] %></a><br/>  
-          <% } %>
-          </span>
-        </p>
-      <%}%>
-          
-</body>
-
+          <td>
+            <a href="<%= classList[i].pages[j] %>"
+              ><%= classList[i].pages[j] %></a
+            >
+          </td>
+          <% } %> <%} %>
+        </tr>
+      </tbody>
+    </table>
+  </body>
 </html>
