@@ -127,34 +127,16 @@ async function getClassList() {
     .toArray()
     .catch((error) => console.log(error));
   client.close();
-  let classList2 = classList.sort((a, b) => {
-    if ( a.className > b.className) {
-      return 1;
-    }
-    if (a.className < b.className) {
-      return -1;
-    }
-    return 0;
-  });
-  return classList2;
+  return classList;
 }
 async function getSiteClassList() {
   let { webscrapper, client } = await mongoConnect();
-  let classListUnsorted = await webscrapper
+  let classList = await webscrapper
     .collection("classList")
     .find({})
     .toArray()
     .catch((error) => console.log(error));
   client.close();
-  let classList = classListUnsorted.sort((a, b) => {
-    if (parseInt(a.className) > parseInt(b.className)) {
-      return -1;
-    }
-    if (parseInt(a.className) < parseInt(b.className)) {
-      return 1;
-    }
-    return 0;
-  });
   return classList.map((item) => {
     return item.className;
   });
