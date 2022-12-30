@@ -20,7 +20,7 @@
     "string-extract-class-names": "^5.9.18"
   },
   "devDependencies": {
-    "mocha": "^7.1.1"
+    "mocha": "^10.2.0"
   },
   "scripts": {
     "test": "mocha",
